@@ -71,7 +71,10 @@ function processFile(filePath) {
             id: branch.id,
             address: branch.address,
             name: branch.title,
+            cn: branch.cn,
         }));
+        //lấy các chi nhánh có cn = cn
+        const simplifiedDataCN = simplifiedData.filter(branch => branch.cn === 'cn');
 
         // Lưu lại dữ liệu mới vào file gốc
         fs.writeFile(filePath, newData, 'utf8', err => {
@@ -85,7 +88,7 @@ function processFile(filePath) {
 
         // Lưu lại dữ liệu arrBranch đã trích xuất vào file JSON
         const jsonFilePath = path.join(__dirname, 'atm-chi-nhanh.json');
-        fs.writeFile(jsonFilePath, JSON.stringify(simplifiedData, null, 2), err => {
+        fs.writeFile(jsonFilePath, JSON.stringify(simplifiedDataCN, null, 2), err => {
             if (err) {
                 console.error('Lỗi khi lưu file JSON:', err);
                 return;
